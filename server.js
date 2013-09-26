@@ -30,6 +30,29 @@ app.configure( 'development', function() {
 	app.use( express.errorHandler() );
 });
 
+
+// Tags CRUD Methods
+// ------------------------------------------ //
+
+// Create
+app.post( '/tag', function( req, res ) {
+	var name = req.body.name || "";
+	var tags = db.collection( 'tags' );
+	tags.insert( 
+		{ 'name': name },
+		{ w: 1 },
+		function( error, object ) {
+			if ( error ) {
+				console.log( error );
+				res.send( 500, 'ruh roh!' );
+			} else {
+				res.send( object );
+			}
+		}
+	);
+});
+
+// Read
 app.get( '/search/tags', function( req, res ) {
 	var tagSnippet = req.query.q;
 	var tags = db.collection( 'tags' );
@@ -39,15 +62,66 @@ app.get( '/search/tags', function( req, res ) {
 		});
 	});
 });
-
-app.get( '/entries', function( req, res ) {
-	var entries = db.collection( 'entries' );
+app.get( '/tags', function( req, res ) {
+	var tags = db.collection( 'tags' );
 	entries.find( {}, function( error, cursor ) {
-		cursor.toArray( function( error, docs ) {
+		cursor.toArray( function( error, docs) {
 			res.send( docs );
-		});
+		})
 	});
 });
+app.get( '/tag/:id', function( req, res ) {
+	var id = req.params.id;
+	var tags = db.collection( 'tags' );
+	tags.findOne( { '_id': new ObjectID( id ) }, function( error, doc ) {
+		res.send( doc );
+	});
+});
+
+// Update
+app.put( 'tag/:id', function( req, res ) {
+	var id = req.params.id;
+	var name = req.body.name || "";
+	var tags = db.collection( 'tags' );
+	tags.update(
+		{ '_id': new ObjectID( id ) },
+		{ 'name': name },
+		{ w: 1 },
+		function( error, numberOfChangedObjects ) {
+			if ( error ) {
+				console.log( error );
+				res.send( 500, 'ruh roh!' );
+			} else {
+				res.send( 200, {} );
+			}
+		}
+	);
+});
+
+// Destroy
+app.del( '/tag/:id', function( req, res ) {
+	var id = req.params.id;
+	var tags = db.collection( 'tags' );
+	tags.remove(
+		{ '_id': new ObjectID( id ) },
+		{ w: 1 },
+		function( error, numberOfRemovedObjects ) {
+			if ( error ) {
+				console.log( error );
+				res.send( 500, 'ruh roh!' );
+			} else {
+				res.send( 200, {} );
+			}
+		}
+	);
+});
+
+
+
+// Entries CRUD Methods
+// ------------------------------------------ //
+
+// Create
 app.post( '/entry', function( req, res ) {
 	var body = req.body.body || "";
 	var tags = req.body.tags || [];
@@ -70,6 +144,16 @@ app.post( '/entry', function( req, res ) {
 		}
 	);
 });
+
+// Read
+app.get( '/entries', function( req, res ) {
+	var entries = db.collection( 'entries' );
+	entries.find( {}, function( error, cursor ) {
+		cursor.toArray( function( error, docs ) {
+			res.send( docs );
+		});
+	});
+});
 app.get( '/entry/:id', function( req, res ) {
 	var id = req.params.id;
 	if ( id ) {
@@ -81,6 +165,8 @@ app.get( '/entry/:id', function( req, res ) {
 		res.send( 500, 'ruh roh!' );
 	}
 });
+
+// Update
 app.put( '/entry/:id', function( req, res ) {
 	var id = req.params.id;
 	var body = req.body.body || "";
@@ -102,6 +188,8 @@ app.put( '/entry/:id', function( req, res ) {
 		);
 	}
 });
+
+// Destroy
 app.del( '/entry/:id', function( req, res ) {
 	var id = req.params.id;
 	if ( id ) {
