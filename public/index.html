@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>wantmail</title>
+	
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	
+	<script src="js/src/jquery.js" type="text/javascript"></script>
+	<script src="js/src/jquery.tokeninput.js" type="text/javascript"></script>
+	<script src="js/src/underscore.js" type="text/javascript"></script>
+	<script src="js/src/backbone.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		WM = {};
+	</script>
+	<script src="js/app.js" type="text/javascript"></script>
+	<script src="js/router.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready( function() {
+			WM.router = new WM.Router();
+			Backbone.history.start();
+		});
+	</script>
+
+</head>
+<body>
+	<div id="templates">
+		<script id="primary-header-template" type="text/template">
+			<h1>WantMail</h1>
+			<nav>
+				<ul>
+					<li><a href="/#entry/all">Entries</a></li>
+					<li><a href="/#entry/new">New Entry</a></li>
+				</ul>
+			</nav>
+		</script>
+		<script id="homepage-template" type="text/template">
+			<h1 id="homepage-title">WantMail</h1>
+		</script>
+		<script id="new-entry-template" type="text/template">
+			<form id="new-entry-form" class="entry-form">
+				<h1 class="form-title">New Entry</h1>
+				<div class="form-item">
+					<label>want or desire</label>
+					<textarea id="entry-body"></textarea>
+				</div>
+				<div class="form-item">
+					<label>tags</label>
+					<input id="tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<input type="submit" value="save entry">
+			</form>
+		</script>
+		<script id="update-entry-template" type="text/template">
+			<form id="update-entry-form" class="entry-form">
+				<h1 class="form-title">Update Entry</h1>
+				<div class="form-item">
+					<label>want or desire</label>
+					<textarea id="entry-body"><%= body %></textarea>
+				</div>
+				<div class="form-item">
+					<label>tags</label>
+					<input id="tags-input" type="text">
+				</div>
+				<div class="form-item">
+					<input type="submit" value="save entry">
+			</form>
+		</script>
+		<script id="entries-template" type="text/template">
+			<header id="page-header">
+				<h1 id="page-title">Journal Entries</h1>
+				<a id="new-entry-button" href="/#entry/new">New Entry</a>
+			</header>
+			<table id="entries"></table>
+		</script>
+		<script id="entry-template" type="text/template">
+			<td class="x entry-x">x</td>
+			<td class="entry"><%= body %></td>
+			<td class="tags">
+				<table>
+					<% for ( var i = 0; i < tags.length; i++ ) { %>
+						<tr>
+							<td class="tag"><%= tags[i] %></td>
+						</tr>
+					<% } %>
+				</table>
+			</td>
+		</script>
+	</div>
+	<div id="content">
+		<div id="inner-content"></div>
+	</div>
+</body>
+</html>
