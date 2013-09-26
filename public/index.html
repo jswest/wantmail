@@ -26,11 +26,12 @@
 <body>
 	<div id="templates">
 		<script id="primary-header-template" type="text/template">
-			<h1>WantMail</h1>
+			<h1><a href="/">WantMail</a></h1>
 			<nav>
 				<ul>
 					<li><a href="/#entry/all">Entries</a></li>
 					<li><a href="/#entry/new">New Entry</a></li>
+					<li><a href="/#tag/all">Tags</a></li>
 				</ul>
 			</nav>
 		</script>
@@ -86,6 +87,19 @@
 					<% } %>
 				</table>
 			</td>
+		</script>
+		<script id="tags-template" type="text/template">
+			<h1 id="page-title">Tags</h1>
+			<div id="new-tag-form-wrapper"></div>
+			<table id="tags"></table>
+		</script>
+		<script id="tag-template" type="text/template">
+			<td class="x tag-x">x</td>
+			<td class="name"><%= name %></td>
+		</script>
+		<script id="new-tag-template" type="text/template">
+			<input type="text" name="name" placeholder="name">
+			<input type="submit" value="save tag">
 		</script>
 	</div>
 	<div id="content">

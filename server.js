@@ -64,7 +64,7 @@ app.get( '/search/tags', function( req, res ) {
 });
 app.get( '/tags', function( req, res ) {
 	var tags = db.collection( 'tags' );
-	entries.find( {}, function( error, cursor ) {
+	tags.find( {}, function( error, cursor ) {
 		cursor.toArray( function( error, docs) {
 			res.send( docs );
 		})

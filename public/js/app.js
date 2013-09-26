@@ -159,7 +159,63 @@ WM.UpdateEntryView = Backbone.View.extend({
 			}
 		);
 	}
-})
+});
+
+
+WM.Tag = Backbone.Model.extend({
+	idAttribute: "_id",
+	url: function() {
+		if ( this.get( '_id' ) ) {
+			return '/entry/' + this.get( '_id' );
+		} else {
+			return '/entry';
+		}
+	}
+});
+WM.TagView = Backbone.View.extend({
+	tagName: 'tr',
+	render: function() {
+		var template = _.template( $('#tag-template').html(), this.model.toJSON() );
+		$('table').append( $(this.el).html( template) );
+	}
+});
+WM.Tags = Backbone.Collection.extend({
+	url: '/tags',
+	model: WM.Tag
+});
+WM.NewTagView = Backbone.View.extend({
+	tagName: 'form',
+	id: 'new-tag-form',
+	events: {
+		'submit form#create-tag-form': 'submitHandler'
+	},
+	render: function() {
+		var template = _.template( $('#new-tag-template').html(), {} );
+		$('#new-tag-form-wrapper').html( $(this.el).html( template ) );
+	},
+	submitHandler: function( e ) {
+		e.preventDefault();
+	}
+});
+WM.TagsView = Backbone.View.extend({
+	className: 'page',
+	render: function() {
+		var template = _.template( $('#tags-template').html(), {} );
+		$('#inner-content').html( $(this.el).html( template ) );
+		var newTagView = new WM.NewTagView();
+		newTagView.render();
+		var tags = new WM.Tags();
+		tags.fetch({
+			success: function() {
+				tags.each( function( tag ) {
+					var tagView = new WM.TagView( { model: tag } );
+					tagView.render();
+				});
+			}
+		});
+	}
+});
+
 
 
 })();

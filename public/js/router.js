@@ -14,7 +14,8 @@ WM.Router = Backbone.Router.extend({
 		'': 'home',
 		'entry/all': 'entries',
 		'entry/new': 'newEntry',
-		'entry/update/:entryId': 'updateEntry'
+		'entry/update/:entryId': 'updateEntry',
+		'tag/all': 'tags'
 	},
 	
 	home: function() {
@@ -44,6 +45,11 @@ WM.Router = Backbone.Router.extend({
 				updateEntryView.render();
 			}
 		});
+	},
+	tags: function() {
+		createHeader();
+		var tagsView = new WM.TagsView();
+		tagsView.render();
 	}
 
 
