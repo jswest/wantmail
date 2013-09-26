@@ -10,3 +10,6 @@ JavaScript through and through: Node on the backend and Backbone on the front. M
 
 ### Who is it? ###
 John West (@jswest) and Galen Beebe.
+
+### Release history ###
+0.1.0 Adds the basic ability to CRUD journal entries.
