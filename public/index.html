@@ -3,7 +3,7 @@
 <head>
 	<title>wantmail</title>
 	
-	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="css/new-style.css" type="text/css">
 	
 	<script src="js/src/jquery.js" type="text/javascript"></script>
 	<script src="js/src/jquery.tokeninput.js" type="text/javascript"></script>
@@ -28,6 +28,9 @@
 		<script id="primary-header-template" type="text/template">
 			<h1><a href="/">WantMail</a></h1>
 			<nav>
+				<div class="line"></div>
+				<div class="line"></div>
+				<div class="line"></div>
 				<ul>
 					<li><a href="/#entry/all">Entries</a></li>
 					<li><a href="/#entry/new">New Entry</a></li>
@@ -73,25 +76,34 @@
 				<h1 id="page-title">Journal Entries</h1>
 				<a id="new-entry-button" href="/#entry/new">New Entry</a>
 			</header>
-			<table id="entries"></table>
+			<table id="entries">
+				<tr>
+					<th></th>
+					<th>Entry</th>
+					<th>Tags</th>
+				</tr>
+			</table>
 		</script>
 		<script id="entry-template" type="text/template">
 			<td class="x entry-x">x</td>
 			<td class="entry"><%= body %></td>
 			<td class="tags">
-				<table>
+				<ul>
 					<% for ( var i = 0; i < tags.length; i++ ) { %>
-						<tr>
-							<td class="tag"><%= tags[i] %></td>
-						</tr>
+						<li class="tag"><%= tags[i] %></li>
 					<% } %>
-				</table>
+				</ul>
 			</td>
 		</script>
 		<script id="tags-template" type="text/template">
 			<h1 id="page-title">Tags</h1>
 			<div id="new-tag-form-wrapper"></div>
-			<table id="tags"></table>
+			<table id="tags">
+				<tr>
+					<th></th>
+					<th>Name</th>
+				</tr>
+			</table>
 		</script>
 		<script id="tag-template" type="text/template">
 			<td class="x tag-x">x</td>
